@@ -1,0 +1,33 @@
+version: '3.1'
+
+services:
+    php:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        ports:
+            - '1234:80'
+        env_file:
+            - .env
+        volumes:
+            - ./app:/var/www/html
+
+    db:
+        image: 'mariadb:10.6.4'
+        restart: always
+        environment:
+            MYSQL_USER: user
+            MYSQL_PASSWORD: password
+        env_file:
+            - .env
+        volumes:
+            - ./database/starterDump.sql:/docker-entrypoint-initdb.d/starterDump.sql
+
+
+    phpmyadmin:
+        image: phpmyadmin
+        restart: always
+        ports:
+            - '1235:80'
+        environment:
+            - PMA_ARBITRARY=1
