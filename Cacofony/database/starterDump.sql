@@ -42,9 +42,9 @@ CREATE TABLE `User` (
 -- Déchargement des données de la table `Post`
 --
 
-INSERT INTO `User` (`id`, `email`, `encodedPassword`, `firstName`, `lastName`) VALUES
-(1, 'admin@admin.fr', '$2y$10$uyF9.qSTn8R58xQHXVl4.e1lluMIpaJkA4Wq7fKT0LLhy4602g5BO', 'admin', 'admin'),
-(2, 'francishuster@gmail.com', '$2y$10$FblEHqz.oiATmgGGCmoSguy7XRRSs67iOmhCfy5xrHrjWSfc8fxui', 'Francis', 'Huster');
+INSERT INTO `User` (`id`, `email`, `encodedPassword`, `firstName`, `lastName`, `roles`) VALUES
+(1, 'admin@admin.fr', '$2y$10$uyF9.qSTn8R58xQHXVl4.e1lluMIpaJkA4Wq7fKT0LLhy4602g5BO', 'admin', 'admin', 'a:1:{i:0;s:10:"ROLE_ADMIN";}'),
+(2, 'francishuster@gmail.com', '$2y$10$FblEHqz.oiATmgGGCmoSguy7XRRSs67iOmhCfy5xrHrjWSfc8fxui', 'Francis', 'Huster', NULL);
 
 --
 -- Index pour les tables déchargées

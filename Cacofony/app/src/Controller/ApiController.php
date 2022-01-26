@@ -15,7 +15,8 @@ class ApiController extends BaseController
      */
     public function getHome(SshKeyHelper $keyHelper)
     {
-        var_dump($keyHelper->getPublicKey());
+//        var_dump($keyHelper->getPublicKey());
+        var_dump(serialize(['ROLE_ADMIN']));
     }
 
     /**
@@ -24,10 +25,10 @@ class ApiController extends BaseController
      * @param SshKeyHelper $keyHelper
      * @return void
      */
-    public function postUserToken(UserManager $userManager, SshKeyHelper $keyHelper)
+    public function getUserToken(UserManager $userManager, SshKeyHelper $keyHelper)
     {
         /** @var $user User */
-        $user = $userManager->findOneBy('email', $_SERVER['PHP_AUTH_USER']);
+        $user = $userManager->findOneBy('email', $_SERVER['PHP_AUTH_USER'] ?? '');
         if ($user && $user->isPasswordValid($_SERVER['PHP_AUTH_PW'])) {
             $this->renderJSON([
                 'status' => 1,
