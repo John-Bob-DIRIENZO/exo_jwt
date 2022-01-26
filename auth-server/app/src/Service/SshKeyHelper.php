@@ -25,7 +25,7 @@ class SshKeyHelper
         }
         $file = file_get_contents(dirname(__DIR__, 2) . '/ssh-keys/jwtRS256.key');
         $private_key = openssl_get_privatekey($file);
-        return openssl_pkey_get_details($private_key)['key'];
+        return str_replace(["\n","\r"], '', openssl_pkey_get_details($private_key)['key']);
     }
 
     public function createPrivateKey(): void

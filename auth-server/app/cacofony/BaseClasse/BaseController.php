@@ -43,7 +43,7 @@ abstract class BaseController
     public function renderJSON($content)
     {
         header('Content-Type: application/json');
-        echo json_encode($content, JSON_PRETTY_PRINT);
+        echo json_encode($content, JSON_PRETTY_PRINT | JSON_UNESCAPED_LINE_TERMINATORS | JSON_UNESCAPED_SLASHES);
         exit;
     }
 

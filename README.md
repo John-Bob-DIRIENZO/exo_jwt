@@ -25,6 +25,8 @@ L'app React est beaucoup plus simple et ne consiste qu'en quelques pages :
 
 ## How to run that
 Un script npm permet de lancer toute l'application
+
+N'oubliez juste pas d'installer les dépendances composer et yarn !
 ```
 cd front-react && npm run project
 ```
