@@ -15,8 +15,8 @@ class ApiController extends BaseController
      */
     public function getHome(SshKeyHelper $keyHelper)
     {
-//        var_dump($keyHelper->getPublicKey());
-        var_dump(serialize(['ROLE_ADMIN']));
+        var_dump($keyHelper->getPublicKey());
+//        var_dump(serialize(['ROLE_ADMIN']));
     }
 
     /**
