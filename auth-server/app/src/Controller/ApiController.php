@@ -34,14 +34,14 @@ class ApiController extends BaseController
                 'status' => 1,
                 'jwt' => JWT::encode(
                     [
-                        'exp' => (new \DateTime('+10 minutes'))->getTimestamp(),
+                        'exp' => (new \DateTime('+15 seconds'))->getTimestamp(),
                         'email' => $user->getEmail(),
                         'firstName' => $user->getFirstName(),
                         'lastName' => $user->getLastName(),
                         'roles' => $user->getRoles()
                     ],
                     $keyHelper->getPrivateKey(), 'RS256'),
-                'pubic-key' => $keyHelper->getPublicKey()
+                'publicKey' => $keyHelper->getPublicKey()
             ]);
         } else {
             $this->renderJSON([

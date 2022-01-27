@@ -9,33 +9,47 @@ import Admin from "./Components/Admin";
 import NeedAuth from "./Auth/NeedAuth";
 import {useState} from "react";
 import {JWTContext} from "./Context/JWTContext";
+import Sidebar from "./Components/Sidebar";
+import Home from "./Components/Home";
 
 function App() {
 
-    const [jwt, setJwt] = useState('');
+    const [userCredentials, setUserCredentials] = useState({
+        jwt: '',
+        publicKey: '',
+        payload: {}
+    });
 
     return (
-        <JWTContext.Provider value={[jwt, setJwt]}>
+        <JWTContext.Provider value={[userCredentials, setUserCredentials]}>
             <BrowserRouter>
-                <div>
-                    <Routes>
-                        <Route path="/" element={<Login/>}/>
-                        <Route path="account" element={
-                            <NeedAuth role={"ROLE_USER"}>
-                                <Account/>
-                            </NeedAuth>
-                        }/>
-                        <Route path="invoice" element={
-                            <NeedAuth role={"ROLE_USER"}>
-                                <Invoice/>
-                            </NeedAuth>
-                        }/>
-                        <Route path="admin" element={
-                            <NeedAuth role={"ROLE_ADMIN"}>
-                                <Admin/>
-                            </NeedAuth>
-                        }/>
-                    </Routes>
+                <div className="row">
+                    <Sidebar/>
+                    <div className="col">
+                        <Routes>
+                            <Route path="/" element={
+                                <NeedAuth role={"ROLE_USER"}>
+                                    <Home/>
+                                </NeedAuth>
+                            }/>
+                            <Route path="account" element={
+                                <NeedAuth role={"ROLE_USER"}>
+                                    <Account/>
+                                </NeedAuth>
+                            }/>
+                            <Route path="invoice" element={
+                                <NeedAuth role={"ROLE_USER"}>
+                                    <Invoice/>
+                                </NeedAuth>
+                            }/>
+                            <Route path="admin" element={
+                                <NeedAuth role={"ROLE_ADMIN"}>
+                                    <Admin/>
+                                </NeedAuth>
+                            }/>
+                            <Route path="/login" element={<Login/>}/>
+                        </Routes>
+                    </div>
                 </div>
             </BrowserRouter>
         </JWTContext.Provider>

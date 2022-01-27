@@ -1,12 +1,20 @@
 import {useContext, useState} from "react";
 import {JWTContext} from "../Context/JWTContext";
-import {base64url} from "jose";
+import {useLocation, useNavigate} from "react-router-dom";
+import useImportCryptoKey from "../Hook/useImportCryptoKey";
+import {exportSPKI, importSPKI} from "jose";
+import * as jose from "jose";
 
 export default function Login() {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [jwt, setJwt] = useContext(JWTContext);
+    const [userCredentials, setUserCredentials] = useContext(JWTContext);
+    const keyHelper = useImportCryptoKey;
+
+    const navigate = useNavigate();
+    let location = useLocation();
+    let from = location.state?.from?.pathname || '/';
 
     const handleChange = (e) => {
         if (e.target.id === 'email') {
@@ -34,8 +42,21 @@ export default function Login() {
             }
         )
             .then(res => res.json())
-            .then(data => console.log(data));
-
+            .then(async data => {
+                try {
+                    const {payload, protectedHeader} = await jose.jwtVerify(data.jwt, await importSPKI(data.publicKey, 'RS256'))
+                    if (data.status === 1) {
+                        setUserCredentials({
+                            jwt: data.jwt,
+                            publicKey: await importSPKI(data.publicKey, 'RS256'),
+                            payload: payload
+                        });
+                        navigate(from, {replace: true});
+                    }
+                } catch (err) {
+                    console.log(err);
+                }
+            });
     }
 
     return (
